@@ -1,4 +1,4 @@
-import { Card, CardContent } from "./ui/card";
+import { Card, CardContent, CardHeader } from "./ui/card";
 import Image from "next/image";
 import MoneyFormatter from "./money-formatter";
 import {
@@ -12,7 +12,7 @@ import {
 } from "./ui/sheet";
 import { Button } from "./ui/button";
 
-export interface ItemProductProps {
+export interface NewItemProductProps {
     image: string;
     name: string;
     id: string;
@@ -20,16 +20,16 @@ export interface ItemProductProps {
     description?: string;
 }
 
-export interface ProductProps extends ItemProductProps {
+export interface NewProductProps extends NewItemProductProps {
     action?: () => void;
 }
 
-const Product: React.FC<ProductProps> = (props) => {
+const NewProduct: React.FC<NewProductProps> = (props) => {
     const { action, ...productProps } = props;
     return (
         <Sheet>
             <SheetTrigger>
-                <ItemProduct {...productProps} />
+                <NewItemProduct {...productProps} />
             </SheetTrigger>
             <SheetContent className="w-full" side={"bottom"}>
                 <SheetHeader>
@@ -45,25 +45,25 @@ const Product: React.FC<ProductProps> = (props) => {
         </Sheet>
     );
 };
-const ItemProduct: React.FC<ItemProductProps> = ({
+const NewItemProduct: React.FC<NewItemProductProps> = ({
     image,
     name,
     id: _id,
     price,
 }) => {
     return (
-        <Card className="w-52 border-none p-0 shadow-none">
-            <CardContent className="flex max-w-sm flex-col gap-y-3 px-4 pb-4 text-left text-black">
-                <div className="relative aspect-square">
+        <Card className="border-0 p-0 shadow-none">
+            <CardContent className="m-0 flex h-full gap-4 p-2">
+                <div className="relative flex aspect-square h-full max-h-20 w-20 items-center justify-center ">
                     <Image
                         src={image}
                         alt={name}
-                        layout="fill"
+                        fill
                         objectFit="cover"
-                        className="rounded-lg transition-all hover:scale-110"
+                        className=" rounded-lg"
                     />
                 </div>
-                <div className="text-sm">
+                <div className="flex w-4/6 flex-col text-start">
                     <p className="overflow-hidden text-ellipsis whitespace-nowrap font-light">
                         {name}
                     </p>
@@ -75,4 +75,4 @@ const ItemProduct: React.FC<ItemProductProps> = ({
         </Card>
     );
 };
-export default Product;
+export default NewProduct;
