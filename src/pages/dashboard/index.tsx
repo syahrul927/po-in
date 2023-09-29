@@ -38,8 +38,10 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className="flex h-40 flex-col rounded-lg bg-neutral-100 bg-opacity-90 p-4">
-                    <div className="text-2xl font-semibold">10</div>
-                    <div className="text-lg text-neutral-500">Total Menus</div>
+                    <div className="text-2xl font-semibold">2</div>
+                    <div className="text-lg text-neutral-500">
+                        Active Pre Order Session
+                    </div>
                     <div className="mt-auto">
                         <div>20%</div>
                         <Progress value={36} className="w-full" />
