@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TrashIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -16,17 +15,9 @@ import {
 	FormMessage,
 } from "~/app/_components/ui/form";
 import { Input } from "~/app/_components/ui/input";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "~/app/_components/ui/select";
-import SortableList from "~/app/_components/ui/sortable-list";
+
 import { Textarea } from "~/app/_components/ui/textarea";
 import { useToast } from "~/app/_components/ui/use-toast";
-import { cn } from "~/lib/utils";
 import { api } from "~/trpc/react";
 import { type RouterOutputs } from "~/trpc/shared";
 import { useEffect } from "react";
