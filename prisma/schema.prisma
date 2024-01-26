@@ -33,12 +33,16 @@ model Product {
 }
 
 model Customer {
-    id        String   @id @default(cuid())
-    name      String
-    phone     String   @unique
-    address   String
-    createdAt DateTime @default(now()) @db.Timestamptz(3)
-    updatedAt DateTime @updatedAt @db.Timestamptz(3)
+    id          String   @id @default(cuid())
+    name        String
+    phone       String   @unique
+    address     String
+    createdAt   DateTime @default(now()) @db.Timestamptz(3)
+    updatedAt   DateTime @updatedAt @db.Timestamptz(3)
+    createdBy   User     @relation(fields: [createdById], references: [id])
+    createdById String
+
+    @@index([createdById, createdAt])
 }
 
 // Necessary for Next auth
@@ -88,6 +92,7 @@ model User {
     createdAt     DateTime    @default(now()) @db.Timestamptz(3)
     updatedAt     DateTime    @updatedAt @db.Timestamptz(3)
     AssetUser     AssetUser[]
+    Customer      Customer[]
 }
 
 model AssetUser {

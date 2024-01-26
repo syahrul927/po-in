@@ -37,8 +37,6 @@ const customerFormSchema = z.object({
 	}),
 	address: z.string(),
 	phone: z.string(),
-	createdAt: z.date(),
-    updatedAt: z.date(),
 });
 
 type CustomerFormValues = z.infer<typeof customerFormSchema>;
@@ -84,14 +82,10 @@ export const CustomerForm = (props: CustomerFormProps) => {
 				name,
 				address,
 				phone,
-				createdAt,
-				updatedAt
 			} = props.data;
 			form.setValue("name", name);
 			form.setValue("address", address);
 			form.setValue("address", phone);
-			form.setValue("createdAt", createdAt);
-			form.setValue("updatedAt", updatedAt);
 		}
 	}, []);
 	async function onSubmit(data: CustomerFormValues) {
@@ -99,15 +93,11 @@ export const CustomerForm = (props: CustomerFormProps) => {
 			name,
 			address,
 			phone,
-			createdAt,
-			updatedAt
 		} = data;
 		mutate.mutate({
 			name,
 			address,
 			phone,
-			createdAt,
-			updatedAt
 		});
 	}
 
@@ -123,7 +113,7 @@ export const CustomerForm = (props: CustomerFormProps) => {
 								<FormLabel>Customer Name</FormLabel>
 								<FormControl>
 									<Input
-										placeholder="your name"
+										placeholder="Your name"
 										{...field}
 									/>
 								</FormControl>
@@ -151,13 +141,32 @@ export const CustomerForm = (props: CustomerFormProps) => {
 							</FormItem>
 						)}
 					/>
+					<FormField
+						control={form.control}
+						name="phone"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Phone Number</FormLabel>
+								<FormControl>
+									<Input
+										placeholder="Your Phone Number"
+										{...field}
+									/>
+								</FormControl>
+								<FormDescription>
+								Enter your telephone number.
+								</FormDescription>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 					<div>
 					</div>
 					<div>
 						
 					</div>
 				</div>
-				<Button type="submit">Save Product</Button>
+				<Button type="submit">Save Customer</Button>
 			</form>
 		</Form>
 	);

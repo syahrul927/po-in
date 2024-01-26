@@ -15,6 +15,7 @@ import {
 import { api } from "~/trpc/react";
 import { columnsPost } from "./components/table/column-customer";
 import { useToast } from "~/app/_components/ui/use-toast";
+import { DataTableToolbarCustomer } from "./components/table/data-table-toolbar";
 
 export default function CustomerPage() {
 	const { data, refetch } = api.customer.getAllCustomer.useQuery();
@@ -40,6 +41,7 @@ export default function CustomerPage() {
 				<CardContent>
 					<DataTable
 						columns={columnsPost}
+						toolbar={DataTableToolbarCustomer}
 						data={
 							data
 								? data.map(({ id, name, phone, address}) => ({

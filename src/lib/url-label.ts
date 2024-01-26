@@ -1,4 +1,24 @@
 export type LabelType = { label: string; description?: string; url: string };
+const CustomerLabel: LabelType[] = [
+	{
+		label: "Add New Customer",
+		url: "/customers/add",
+		description: "This is how customer see your product",
+	},
+	{
+		label: "Customers",
+		url: "/customers",
+		description: "View all your customers here",
+	},
+	{
+		label: "Update Customers",
+		url: "/customers/update",
+		description: "View all your customers here",
+	},
+
+
+	
+]
 const ProductsLabel: LabelType[] = [
 	{
 		label: "Products",
@@ -10,6 +30,7 @@ const ProductsLabel: LabelType[] = [
 		url: "/products/add",
 		description: "This is how customer see your product",
 	},
+	
 	{
 		label: "Update Product",
 		url: "/products/update*",
@@ -23,15 +44,10 @@ const PathLabel: LabelType[] = [
 		description: "Summary of the data you have",
 	},
 	{
-		label: "Customers",
-		url: "/customers",
-		description: "View all your customers here",
-	},
-	
-	{
 		label: "Settings",
 		url: "/",
 	},
 	...ProductsLabel,
+	...CustomerLabel
 ];
 export default PathLabel;

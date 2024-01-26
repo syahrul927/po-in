@@ -8,7 +8,7 @@ export const customerRouter = createTRPCRouter({
 		const { id } = ctx.session.user;
 		return await ctx.db.customer.findMany({
 			where: {
-				id: id,
+				createdById: id,
 			},
 			orderBy: {
 				createdAt: "desc",
@@ -31,8 +31,6 @@ export const customerRouter = createTRPCRouter({
                name: customer.name,
                phone: customer.phone,
                address: customer.address,
-               createdAt: customer.createdAt,
-               updatedAt: customer.updatedAt,
                id: customer.id 
             }
     }),
@@ -43,8 +41,6 @@ export const customerRouter = createTRPCRouter({
                 name: z.string(),
                 phone: z.string(),
                 address: z.string(),
-                createdAt: z.date(),
-                updatedAt: z.date(),
             })
         )
         .mutation(async ({ ctx, input }) => {
@@ -53,8 +49,7 @@ export const customerRouter = createTRPCRouter({
                     name: input.name,
                     phone: input.phone,
                     address: input.address,
-                    updatedAt: input.updatedAt,
-                    createdAt: input.createdAt,
+                    createdById: ctx.session.user.id
                 },
             });
             return customer;
