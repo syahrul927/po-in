@@ -2,8 +2,8 @@ import { type Column } from "@tanstack/react-table";
 import { CheckIcon, PlusCircleIcon } from "lucide-react";
 import * as React from "react";
 import { cn } from "~/lib/utils";
-import { Button } from "../../../../_components/ui/button";
-import { Badge } from "../../../../_components/ui/badge";
+import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
 import {
 	Command,
 	CommandEmpty,
@@ -12,7 +12,7 @@ import {
 	CommandItem,
 	CommandList,
 	CommandSeparator,
-} from "../../../../_components/ui/command";
+} from "../ui/command";
 import {
 	Popover,
 	PopoverContent,

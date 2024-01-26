@@ -1,19 +1,15 @@
 "use client";
 
-import { type Table } from "@tanstack/react-table";
 import { XIcon } from "lucide-react";
+import Link from "next/link";
+import { type DataTableToolbarProps } from "~/app/_components/table/table-type";
 import { Button } from "~/app/_components/ui/button";
+import { DataTableFacetedFilter } from "../../../../_components/table/data-table-faceted-filter";
+import { DataTableViewOptions } from "../../../../_components/table/data-table-view-options";
 import { Input } from "../../../../_components/ui/input";
 import { statuses } from "../../data/data";
-import { DataTableFacetedFilter } from "./data-table-faceted-filter";
-import { DataTableViewOptions } from "./data-table-view-options";
-import Link from "next/link";
 
-interface DataTableToolbarProps<TData> {
-	table: Table<TData>;
-}
-
-export function DataTableToolbar<TData>({
+export function DataTableToolbarProduct<TData>({
 	table,
 }: DataTableToolbarProps<TData>) {
 	const isFiltered = table.getState().columnFilters.length > 0;
