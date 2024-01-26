@@ -3,6 +3,7 @@ import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { z } from "zod";
 
 export const customerRouter = createTRPCRouter({
+    
     getAllCustomer: protectedProcedure.query(async ({ ctx }) => {
 		const { id } = ctx.session.user;
 		return await ctx.db.customer.findMany({
@@ -47,7 +48,7 @@ export const customerRouter = createTRPCRouter({
             })
         )
         .mutation(async ({ ctx, input }) => {
-            const segment = await ctx.db.customer.create({
+            const customer = await ctx.db.customer.create({
                 data: {
                     name: input.name,
                     phone: input.phone,
@@ -56,7 +57,18 @@ export const customerRouter = createTRPCRouter({
                     createdAt: input.createdAt,
                 },
             });
-            return segment;
+            return customer;
         }),
+
+        deleteById: protectedProcedure
+            .input(z.string())
+            .mutation(async ({ ctx, input }) => {
+                return await ctx.db.customer.delete({
+                    where: {
+
+                        id: input,
+                    }
+                })
+            })
 
 })

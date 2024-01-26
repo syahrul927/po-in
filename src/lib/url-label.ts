@@ -27,6 +27,7 @@ const PathLabel: LabelType[] = [
 		url: "/customers",
 		description: "View all your customers here",
 	},
+	
 	{
 		label: "Settings",
 		url: "/",

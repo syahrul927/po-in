@@ -177,7 +177,6 @@ export const ProductForm = (props: ProductFormProps) => {
 	async function onSubmit(data: ProductFormValues) {
 		const {
 			addon,
-			slug,
 			images,
 			name,
 			price,
@@ -190,7 +189,7 @@ export const ProductForm = (props: ProductFormProps) => {
 			images,
 			name,
 			price,
-			slug,
+			slug:props.update? props.data.slug:undefined,
 			status,
 			description,
 			variants: variants,
