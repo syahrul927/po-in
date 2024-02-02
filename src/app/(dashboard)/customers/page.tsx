@@ -1,10 +1,4 @@
 "use client";
-import {
-	Layers2Icon,
-	LayersIcon,
-	PartyPopperIcon,
-	SparkleIcon,
-} from "lucide-react";
 import { DataTable } from "~/app/_components/table/data-table";
 import {
 	Card,
