@@ -1,122 +1,133 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Product {
-    id          String   @id @default(cuid())
-    name        String
-    slug        String   @unique
-    description String?
-    images      String[]
-    variants    String[]
-    addon       Json?
-    price       Float
-    status      Status
-    createdAt   DateTime @default(now()) @db.Timestamptz(3)
-    updatedAt   DateTime @updatedAt @db.Timestamptz(3)
-    createdBy   User     @relation(fields: [createdById], references: [id])
-    createdById String
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  images      String[]
+  variants    String[]
+  addon       Json?
+  price       Float
+  status      Status
+  createdAt   DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(3)
+  createdById String
+  createdBy   User     @relation(fields: [createdById], references: [id])
 
-    @@index([slug, createdById, createdAt])
+  @@index([slug, createdById, createdAt])
 }
 
 model Customer {
-    id          String   @id @default(cuid())
-    name        String
-    phone       String   @unique
-    address     String
-    createdAt   DateTime @default(now()) @db.Timestamptz(3)
-    updatedAt   DateTime @updatedAt @db.Timestamptz(3)
-    createdBy   User     @relation(fields: [createdById], references: [id])
-    createdById String
+  id          String   @id @default(cuid())
+  name        String
+  phone       String   @unique
+  address     String
+  createdAt   DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(3)
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  createdById String
 
-    @@index([createdById, createdAt])
+  @@index([createdById, createdAt])
 }
 
-// Necessary for Next auth
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? @db.Text
-    access_token      String? @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? @db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@unique([provider, providerAccountId])
-}
-
-enum UserRole {
-    USER
-    ADMIN
-
-    @@map("RoleAccount")
+  @@unique([provider, providerAccountId])
 }
 
 model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    expires      DateTime
-    userId       String
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  expires      DateTime
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-    id            String      @id @default(cuid())
-    name          String?
-    email         String?     @unique
-    emailVerified DateTime?
-    image         String?
-    role          UserRole    @default(USER)
-    accounts      Account[]
-    sessions      Session[]
-    Product       Product[]
-    createdAt     DateTime    @default(now()) @db.Timestamptz(3)
-    updatedAt     DateTime    @updatedAt @db.Timestamptz(3)
-    AssetUser     AssetUser[]
-    Customer      Customer[]
+  id            String      @id @default(cuid())
+  name          String?
+  email         String?     @unique
+  emailVerified DateTime?
+  image         String?
+  role          UserRole    @default(USER)
+  createdAt     DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt     DateTime    @updatedAt @db.Timestamptz(3)
+  accounts      Account[]
+  AssetUser     AssetUser[]
+  Product       Product[]
+  sessions      Session[]
+  Customer      Customer[]
 }
 
 model AssetUser {
-    id        String   @id @default(cuid())
-    name      String
-    url       String
-    key       String
-    size      Float
-    createdAt DateTime @default(now()) @db.Timestamptz(3)
-    userId    String
-    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        String   @id @default(cuid())
+  name      String
+  url       String
+  key       String
+  size      Float
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@index([userId, key, url])
+  @@index([userId, key, url])
 }
 
 model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-    @@unique([identifier, token])
+  @@unique([identifier, token])
+}
+
+model Promo {
+  id             String   @id
+  code           String   @unique
+  type           Type
+  value          String
+  minTransaction Float
+  maxValuePromo  String
+  expiredAt      DateTime
+  createdAt      DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt      DateTime @db.Timestamptz(3)
+
+  @@index([code, createdAt])
+}
+
+enum UserRole {
+  USER
+  ADMIN
+
+  @@map("RoleAccount")
 }
 
 enum Status {
-    ACTIVE
-    INACTIVE
+  ACTIVE
+  INACTIVE
+}
+
+enum Type {
+  FIX
+  PERCENTAGE
 }
